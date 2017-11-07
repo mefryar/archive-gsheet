@@ -17,20 +17,20 @@ function onOpen() {
 // Building on https://gist.github.com/abhijeetchopra/99a11fb6016a70287112
 function archiveCopy() {
 
+  // Replace "spreadsheetId" with the ID of the Google Sheet you wish to copy
+  var file = DriveApp.getFileById("spreadsheetId")
+
+  // Replace "folderId" with the ID of the folder where you want the copy saved
+  var destination = DriveApp.getFolderById("folderId");
+
   // Get timezone for datestamp
   var timeZone = Session.getScriptTimeZone();
 
-  // Generate the datestamp and store in variable formattedDate as year-month-date
+  // Generate datestamp and store in variable formattedDate as year-month-date
   var formattedDate = Utilities.formatDate(new Date(), timeZone , "yyyy-MM-dd");
 
-  // Add datestamp stored in formattedDate to beginning of original file name
-  var name = formattedDate + " your_file_name";
-
-  // Get the destination folder by their ID
-  var destination = DriveApp.getFolderById("XXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-
-  // Specify the Google Sheet (This ID is for "Training Team Portfolio Tracker")
-  var file = DriveApp.getFileById("1m1_QRvh0ulhU5XWcQXjKx92HvR40CVcCynTWLQaD-Rg")
+  // Replace "file_name" with the name you want to give the copy
+  var name = formattedDate + " file_name";
 
   // Archive copy of "file" with "name" at the "destination"
   file.makeCopy(name, destination);
@@ -40,9 +40,13 @@ function archiveCopy() {
 // Building on https://www.youtube.com/watch?v=2y7Y5hwmPc4
 function openArchive() {
 
-  var url = "https://drive.google.com/drive/folders/XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  // Replace "folderId" with the ID of the folder where you want copies saved
+  var url = "https://drive.google.com/drive/folders/folderId"
+
+  // HTML to open folder url in new tab and then close dialogue window in sheet
   var html = "<script>window.open('" + url + "');google.script.host.close();</script>";
 
-  var userInterface = HtmlService.createHtmlOutput(html);  // Output is the HtmlOutput
+  // Push HTML into user interface
+  var userInterface = HtmlService.createHtmlOutput(html);
   SpreadsheetApp.getUi().showModalDialog(userInterface, 'Opening Archive Folder');
 }
